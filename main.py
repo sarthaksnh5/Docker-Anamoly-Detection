@@ -1,3 +1,4 @@
+import numpy
 import schedule
 import datetime
 import time
@@ -17,19 +18,22 @@ def myJob():
     test_pred = clf.predict(testDataSet)
     y_test_scores = clf.decision_function(testDataSet)  # outlier scores
 
-    y_data = [i for i in range(len(test_pred))]
+    unique, count = numpy.unique(test_pred, return_counts=True)
+    data = dict(zip(unique, count))
+    print(data[1])
 
-    fig, ax_left = plt.subplots()
-    ax_right = ax_left.twinx()
+    # y_data = [i for i in range(len(test_pred))]
+    # print(test_pred.count(1))
 
-    ax_left.plot(test_pred, color="red")
-    ax_right.plot(testDataSet, color="blue")
-    # ax_left.plot(y_train_pred, color="red")
-    # ax_right.plot(train_data, color="blue")
+    # fig, ax_left = plt.subplots()
+    # ax_right = ax_left.twinx()
 
-    plt.show()
+    # ax_left.plot(test_pred, color="red")
+    # ax_right.plot(testDataSet, color="blue")
+    # # ax_left.plot(y_train_pred, color="red")
+    # # ax_right.plot(train_data, color="blue")
 
-
+    # plt.show()
 
 # schedule.every(10).seconds.do(myJob)
 # schedule.every(10).minutes.do(job)
