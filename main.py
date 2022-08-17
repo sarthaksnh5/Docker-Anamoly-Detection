@@ -44,7 +44,7 @@ def mainFunc(anamoly):
             print("[STATUS] Model Done")
 
             myJob(clf)
-            if anamoly['params'][param]['model_store']:
+            if not anamoly['params'][param]['model_store']:
                 print("[STATUS] Deleting model")
                 os.remove(model_name)
 
