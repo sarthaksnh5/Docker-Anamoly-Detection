@@ -20,7 +20,8 @@ anamoly = [
         "dataCount": 86400,
         "params": {
             "g1": {
-                "url": "http://192.168.1.8/g1.joblib"
+                "url": "http://192.168.1.8/g1.joblib",
+                "model_store": True
             }
         }
     },
@@ -29,22 +30,23 @@ anamoly = [
 
 def mainFunc(anamoly):
     if anamoly['version'] == 'v1':
-        model_name = 'g1_model.joblib'
-        parameter = list(anamoly['params'].keys())[0]
-        print(parameter)
-        model_url = anamoly['params'][parameter]['url']
+        parameters = list(anamoly['params'].keys())
+        for param in parameters:
+            model_name = '{0}_model.joblib'.format(param)
+            
+            model_url = anamoly['params'][param]['url']
 
-        r = requests.get(model_url)
-        open(model_name, 'wb').write(r.content)
+            r = requests.get(model_url)
+            open(model_name, 'wb').write(r.content)
 
-        clf = load(model_name, parameter)
+            clf = load(model_name, param)
 
-        print("[STATUS] Model Done")
+            print("[STATUS] Model Done")
 
-        myJob(clf)
-
-        print("[STATUS] Deleting model")
-        os.remove(model_name)
+            myJob(clf)
+            if anamoly['params'][param]['model_store']:
+                print("[STATUS] Deleting model")
+                os.remove(model_name)
 
 
 def myJob(clf, param):
