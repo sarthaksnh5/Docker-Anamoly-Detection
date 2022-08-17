@@ -11,9 +11,9 @@ matplotlib
 numba
 numpy
 patsy
-pytz-2022.1 
 scikit-learn
 scipy
 statsmodels
 threadpoolctl
 zipp
+influxdb_client
